@@ -1,0 +1,17 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+
+
+JOB_NAME="paas-ta-portal-webuser"
+JOB_FILE="${JOB_NAME}.tar.gz"
+ARCHIVE="${JOB_NAME}/${JOB_FILE}"
+
+
+#unzip file move job directory
+echo 'file move'
+cp -r  $JOB_NAME/* ${BOSH_INSTALL_TARGET}
+
+#zip file move job direcotory
+#echo 'zip file move'
+#sudo mv ${$ARCHIVE} ${BOSH_INSTALL_TARGET}

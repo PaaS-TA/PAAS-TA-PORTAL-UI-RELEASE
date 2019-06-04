@@ -1,0 +1,32 @@
+#!/bin/bash
+# Binary_storage stemcell 버전은 3468.51 버전으로 사용하십시요.
+# vsphere 인 경우 에는 use-public-network-vsphere.yml 사용하여 public ip를 설정 하고 그 이외의 IaaS는 use-public-network.yml 사용한다.
+
+bosh -e micro-bosh -d paasta-portal-ui deploy paasta-portal-bosh2.0.yml \
+   -o use-public-network-vsphere.yml \
+   -v releases_name="paasta-portal-ui-release"\
+   -v stemcell_os="ubuntu-trusty"\
+   -v stemcell_version="3468.51"\
+   -v stemcell_alias="default"\
+   -v vm_type_tiny="portal_tiny"\
+   -v vm_type_small="portal_small"\
+   -v vm_type_medium="portal_medium"\
+   -v internal_networks_name=service_private \
+   -v external_networks_name=portal_service_public \
+   -v mariadb_disk_type="10GB"\
+   -v mariadb_port=3306\
+   -v mariadb_user_password="admin_test"\
+   -v haproxy_public_ip="255.255.255.255"\
+   -v portal_client_secret="secret"\
+   -v portal_webuser_quantity=false\
+   -v portal_webuser_monitoring=false\
+   -v portal_webuser_automaticapproval=false\
+   -v infra_admin=false\
+   -v gateway_port=2225\
+   -v eureka_port=2221\
+   -v default_portal_api_url="http://255.255.255.255:2225"\
+   -v default_portal_api_name="PaaS-TA 4.3"\
+   -v default_portal_uaa_url="https://uaa.255.255.255.255.xip.io"\
+   -v default_portal_header_auth=""\
+   -v default_portal_api_desc="PaaS-TA 4.3 install infra"\
+   -v cf_api_version="v3"

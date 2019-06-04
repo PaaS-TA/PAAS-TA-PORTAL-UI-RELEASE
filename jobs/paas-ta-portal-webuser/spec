@@ -1,0 +1,46 @@
+---
+name: paas-ta-portal-webuser
+packages: 
+  - apache2
+  - paas-ta-portal-webuser
+
+templates:
+  bin/httpd_ctl: bin/httpd_ctl
+  bin/pre_start.erb: bin/pre_start
+  bin/monit_debugger: bin/monit_debugger
+  data/properties.sh.erb: data/properties.sh
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+  config/httpd.conf.erb: config/httpd.conf
+  config/config.json.erb: config/config.json
+
+provides:
+  - {name: paas-ta-portal-webuser-link, type: paas-ta-portal-webuser, properties: [logPath, webDir, server.port, cf.uaa.clientsecret, monitoring, quantity, automaticApproval, cf_api_version, webadmin_ips]}
+
+consumes:
+  - name: webadmin-link
+    type: paas-ta-portal-webadmin
+
+properties:
+  logPath:
+    description: 'apache log path'
+    default: 'logs'
+  webDir:
+    description: 'web directory'
+    default: '/var/vcap/packages/apache2/htdocs'
+  server.port:
+    description: 'web port'
+    default: '80'
+  cf.uaa.clientsecret:
+    description: 'portalclient secret'
+    default: 'clientsecret'
+  monitoring:
+    description: 'user-portal use monitoring view'
+  quantity:
+    description: 'user-portal use quantity view'
+  automaticApproval:
+    description: 'auto Approval'
+  cf_api_version:
+    description: 'cf api version'
+  webadmin_ips:
+    description: 'webadmin ips'
