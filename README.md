@@ -21,6 +21,8 @@ src <br>
 └── README.md <br>
 
 
+***PaaS-TA 4.5 공개시 사용 가능 ***
+
 ```
 $ cd ~/
 $ git clone https://github.com/PaaS-TA/PAAS-TA-PORTAL-RELEASE.git
