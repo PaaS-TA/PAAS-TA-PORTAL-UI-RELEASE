@@ -19,7 +19,7 @@ spring:
         metadata-keys-to-sanitize: .password$,.*secret$,.*key$,.$token$,.credentials.,.*vcap_services$
 <% end %>
   thymeleaf:
-    cache: false # false : 서버 재시작 없이 새로고침.  개발서버 이상부터는 true로 설정.
+    cache: true # false : 서버 재시작 없이 새로고침.  개발서버 이상부터는 true로 설정.
 
     check-template: true
     check-template-location: true
@@ -90,13 +90,3 @@ paasta:
 logging:
   level:
     org.openpaas.paasta.portal.web.admin.exception.GlobalControllerExceptionHandler: DEBUG
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://<%= p('api.url') %>:<%= p('eureka.port') %>/eureka/
-      registry-fetch-interval-seconds: 5
-  instance:
-    hostname: ${spring.cloud.client.hostname}
-    lease-expiration-duration-in-seconds: 5
-    lease-renewal-interval-in-seconds: 10
-
