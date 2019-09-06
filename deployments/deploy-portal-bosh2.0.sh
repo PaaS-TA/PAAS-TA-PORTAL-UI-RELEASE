@@ -22,9 +22,7 @@ bosh -e micro-bosh -d paasta-portal-ui deploy paasta-portal-bosh2.0.yml \
    -v portal_webuser_monitoring=false\
    -v portal_webuser_automaticapproval=false\
    -v infra_admin=false\
-   -v gateway_port=2225\
-   -v eureka_port=2221\
-   -v default_portal_api_url="http://255.255.255.255:2225"\
+   -v default_portal_api_url="255.255.255.255:2225"\
    -v default_portal_api_name="PaaS-TA 4.3"\
    -v default_portal_uaa_url="https://uaa.255.255.255.255.xip.io"\
    -v default_portal_header_auth=""\
