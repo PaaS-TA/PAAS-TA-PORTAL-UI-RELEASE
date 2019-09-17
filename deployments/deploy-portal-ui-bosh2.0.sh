@@ -1,7 +1,7 @@
 #!/bin/bash
 
 bosh -e micro-bosh -d paasta-portal-ui deploy paasta-portal-bosh2.0.yml \
-   -o use-public-network-aws.yml \
+   -o use-public-network-[Your_IaaS].yml \
    -v releases_name="paasta-portal-ui-release"\
    -v stemcell_os="ubuntu-trusty"\
    -v stemcell_version="315.36"\
