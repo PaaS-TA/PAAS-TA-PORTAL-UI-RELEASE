@@ -4,11 +4,11 @@ name: paasta-portal-ui                      # 서비스 배포이름(필수) bos
 stemcells:
 - alias: ((stemcell_alias))
   os: ((stemcell_os))
-  version: "((stemcell_version))"
+  version: ((stemcell_version))
 
 releases:
 - name: "((releases_name))"                   # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  version: "1.0"                                              # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  version: latest                                              # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -28,14 +28,14 @@ instance_groups:
   persistent_disk_type: "((mariadb_disk_type))"
   networks:
   - name: ((internal_networks_name))
-  templates:
+  jobs:
   - name: mariadb
     release: "((releases_name))" 
   syslog_aggregator: null
 
 - name: haproxy
   azs:
-  - z6
+  - z7
   instances: 1
   vm_type: "((vm_type_tiny))"
   stemcell: "((stemcell_alias))"
@@ -43,11 +43,14 @@ instance_groups:
   - name: ((internal_networks_name))
   - name: ((external_networks_name))
     static_ips: ((haproxy_public_ip))
-  templates:
+  jobs:
   - name: haproxy
     release: "((releases_name))"
   syslog_aggregator: null
-
+  properties:
+    infra:
+      admin:
+        enable: "((infra_admin))"
 
 ######## WEB SERVICE ########
 
@@ -59,7 +62,7 @@ instance_groups:
   stemcell: "((stemcell_alias))"
   networks:
   - name: ((internal_networks_name))
-  templates:
+  jobs:
   - name: paas-ta-portal-webadmin
     release: "((releases_name))"
   syslog_aggregator: null
@@ -67,10 +70,6 @@ instance_groups:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     api:
       url: "((default_portal_api_url))"
-    gateway:
-      port: "((gateway_port))"
-    eureka:
-      port: "((eureka_port))"
     port: 8090
 
 - name: paas-ta-portal-webuser
@@ -81,7 +80,7 @@ instance_groups:
   stemcell: "((stemcell_alias))"
   networks:
   - name: ((internal_networks_name))
-  templates:
+  jobs:
   - name: paas-ta-portal-webuser
     release: "((releases_name))"
   syslog_aggregator: null

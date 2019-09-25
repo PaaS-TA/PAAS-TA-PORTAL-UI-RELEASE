@@ -21,7 +21,7 @@ src <br>
 └── README.md <br>
 
 
-***PaaS-TA 4.5 공개시 사용 가능 ***
+***PaaS-TA 4.6 공개시 사용 가능 ***
 
 ```
 $ cd ~/
