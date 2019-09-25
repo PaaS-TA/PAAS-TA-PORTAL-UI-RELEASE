@@ -82,9 +82,9 @@ paasta:
       authorization:
         base64: Basic YWRtaW46b3BlbnBhYXN0YQ==
       zuulUrl:
-        cfapi: http://<%= p('api.url') %>/portalapi
-        commonapi: http://<%= p('api.url') %>/commonapi
-        storageapi: http://<%= p('api.url') %>/storageapi
+        cfapi: <%= p('api.url') %>/portalapi
+        commonapi: <%= p('api.url') %>/commonapi
+        storageapi: <%= p('api.url') %>/storageapi
     storageapi:
       type: swift
 logging:
