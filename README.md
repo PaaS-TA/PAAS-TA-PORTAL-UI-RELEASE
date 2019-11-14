@@ -21,12 +21,13 @@ src <br>
 └── README.md <br>
 
 
-***PaaS-TA 4.6 공개시 사용 가능 ***
+***PaaS-TA 5.0 공개시 사용 가능 ***
 
 ```
 $ cd ~/
-$ git clone https://github.com/PaaS-TA/PAAS-TA-PORTAL-RELEASE.git
-$ cd ~/PAAS-TA-PORTAL-RELEASE
-$ wget -O src.zip http://45.248.73.44/index.php/s/GDWgAMRQ7tnH7eo/download
+$ git clone https://github.com/PaaS-TA/PAAS-TA-PORTAL-UI-RELEASE.git
+$ cd ~/PAAS-TA-PORTAL-UI-RELEASE
+$ wget -O src.zip http://45.248.73.44/index.php/s/rK7zcsJZmNkxE6B/download 
 $ unzip src.zip
+$ sh start.sh
 ```
