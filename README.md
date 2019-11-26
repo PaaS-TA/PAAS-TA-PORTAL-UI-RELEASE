@@ -27,7 +27,7 @@ src <br>
 $ cd ~/
 $ git clone https://github.com/PaaS-TA/PAAS-TA-PORTAL-UI-RELEASE.git
 $ cd ~/PAAS-TA-PORTAL-UI-RELEASE
-$ wget -O src.zip http://45.248.73.44/index.php/s/rK7zcsJZmNkxE6B/download 
+$ wget -O src.zip http://45.248.73.44/index.php/s/ocPDte2tZKTTZm6/download
 $ unzip src.zip
 $ sh start.sh
 ```
