@@ -2,4 +2,8 @@
 name: apache2
 dependencies: []
 files:
-- apache2/httpd-2.2.25.tar.gz
+- apache2/httpd-2.4.46.tar.gz
+- apache2/apr-1.7.0.tar.gz
+- apache2/apr-util-1.6.1.tar.gz
+- apache2/pcre-8.43.tar.gz
+- apache2/expat-2.2.8.tar.gz

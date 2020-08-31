@@ -1,18 +1,44 @@
-
+#
+## ServerRoot: The top of the directory tree under which the server's
+## configuration, error, and log files are kept.
+##
+## Do not add a slash at the end of the directory path.  If you point
+## ServerRoot at a non-local disk, be sure to specify a local disk on the
+## Mutex directive, if file-based mutexes are used.  If you wish to share the
+## same ServerRoot for multiple httpd daemons, you will need to change at
+## least PidFile.
+##
 ServerRoot "/var/vcap/packages/apache2"
+
+
+#
+## Listen: Allows you to bind Apache to specific IP addresses and/or
+## ports, instead of the default. See also the <VirtualHost>
+## directive.
+##
+## Change this to Listen on specific IP addresses as shown below to 
+## prevent Apache from glomming onto all bound IP addresses.
+##
 Listen <%= p('server.port')%>
 
+#
+## Dynamic Shared Object (DSO) Support
+##
+## To be able to use the functionality of a module which was built as a DSO you
+## have to place corresponding `LoadModule' lines at this location so the
+## directives contained in it are actually available _before_ they are used.
+## Statically compiled modules (those listed by `httpd -l') do not need
+## to be loaded here.
+##
+## Example:
+## LoadModule foo_module modules/mod_foo.so
+##
+LoadModule access_compat_module modules/mod_access_compat.so
 LoadModule authn_file_module modules/mod_authn_file.so
-#LoadModule authn_dbm_module modules/mod_authn_dbm.so
-#LoadModule authn_anon_module modules/mod_authn_anon.so
-#LoadModule authn_dbd_module modules/mod_authn_dbd.so
-#LoadModule authn_default_module modules/mod_authn_default.so
 LoadModule authz_host_module modules/mod_authz_host.so
+LoadModule authz_core_module modules/mod_authz_core.so
 LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
 LoadModule authz_user_module modules/mod_authz_user.so
-#LoadModule authz_dbm_module modules/mod_authz_dbm.so
-#LoadModule authz_owner_module modules/mod_authz_owner.so
-#LoadModule authz_default_module modules/mod_authz_default.so
 LoadModule auth_basic_module modules/mod_auth_basic.so
 LoadModule auth_digest_module modules/mod_auth_digest.so
 LoadModule dbd_module modules/mod_dbd.so
@@ -25,13 +51,20 @@ LoadModule substitute_module modules/mod_substitute.so
 LoadModule deflate_module modules/mod_deflate.so
 LoadModule log_config_module modules/mod_log_config.so
 LoadModule log_forensic_module modules/mod_log_forensic.so
+#LoadModule authn_dbm_module modules/mod_authn_dbm.so
+#LoadModule authn_anon_module modules/mod_authn_anon.so
+#LoadModule authn_dbd_module modules/mod_authn_dbd.so
+#LoadModule authn_default_module modules/mod_authn_default.so
+#LoadModule authz_dbm_module modules/mod_authz_dbm.so
+#LoadModule authz_owner_module modules/mod_authz_owner.so
+#LoadModule authz_default_module modules/mod_authz_default.so
 LoadModule logio_module modules/mod_logio.so
 LoadModule env_module modules/mod_env.so
 LoadModule mime_magic_module modules/mod_mime_magic.so
-LoadModule cern_meta_module modules/mod_cern_meta.so
+#LoadModule cern_meta_module modules/mod_cern_meta.so
 LoadModule expires_module modules/mod_expires.so
 LoadModule headers_module modules/mod_headers.so
-LoadModule ident_module modules/mod_ident.so
+#LoadModule ident_module modules/mod_ident.so
 LoadModule usertrack_module modules/mod_usertrack.so
 LoadModule unique_id_module modules/mod_unique_id.so
 LoadModule setenvif_module modules/mod_setenvif.so
@@ -50,25 +83,38 @@ LoadModule status_module modules/mod_status.so
 LoadModule autoindex_module modules/mod_autoindex.so
 LoadModule asis_module modules/mod_asis.so
 LoadModule info_module modules/mod_info.so
-LoadModule cgi_module modules/mod_cgi.so
+#LoadModule cgi_module modules/mod_cgi.so
 LoadModule dav_fs_module modules/mod_dav_fs.so
 LoadModule vhost_alias_module modules/mod_vhost_alias.so
 LoadModule negotiation_module modules/mod_negotiation.so
 LoadModule dir_module modules/mod_dir.so
-LoadModule imagemap_module modules/mod_imagemap.so
+#LoadModule imagemap_module modules/mod_imagemap.so
 LoadModule actions_module modules/mod_actions.so
 LoadModule speling_module modules/mod_speling.so
 LoadModule userdir_module modules/mod_userdir.so
 LoadModule alias_module modules/mod_alias.so
 LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule slotmem_shm_module modules/mod_slotmem_shm.so
 
-<IfModule !mpm_netware_module>
-  <IfModule !mpm_winnt_module>
-    User daemon
-    Group daemon
-  </IfModule>
+#
+# If you wish httpd to run as a different user or group, you must run
+# httpd as root initially and it will switch.
+#
+# User/Group: The name (or #number) of the user/group to run httpd as.
+# It is usually good practice to create a dedicated user and group for
+# running httpd, as with most system services.
+#
+<IfModule unixd_module>
+  User vcap
+  Group vcap
 </IfModule>
 
+#
+# ServerAdmin: Your address, where problems with the server should be
+# e-mailed.  This address appears on some server-generated pages, such
+# as error documents.  e.g. admin@your-domain.com
+#
 ServerAdmin you@example.com
 
 <IfModule mod_rewrite.c>
@@ -78,10 +124,18 @@ ServerAdmin you@example.com
   RewriteRule . /index.html [L]
 </IfModule>
 
+#
+# Each directory to which Apache has access can be configured with respect
+# to which services and features are allowed and/or disabled in that
+# directory (and its subdirectories). 
+#
+# First, we configure the "default" to be a very restrictive set of 
+# features.  
+#
 <Directory />
   Options FollowSymLinks
   AllowOverride none
-  Require all granted
+  Require all denied
 </Directory>
 
 <VirtualHost *:<%= p('server.port')%>>
@@ -90,28 +144,56 @@ ServerAdmin you@example.com
   ProxyPreserveHost On
 </VirtualHost>
 
-
+#
+# DocumentRoot: The directory out of which you will serve your
+# documents. By default, all requests are taken from this directory, but
+# symbolic links and aliases may be used to point to other locations.
+#
 ##여기 위치 바꿔야함
 DocumentRoot "<%= p('webDir')%>"
+
+#
+# Note that from this point forward you must specifically allow
+# particular features to be enabled - so if something's not working as
+# you might expect, make sure that you have specifically enabled it
+# below.
+#
 <Directory "<%= p('webDir')%>">
   Options FollowSymLinks Multiviews
   MultiviewsMatch Any
   AllowOverride all
   FallbackResource index.html
   Require all granted
-  Satisfy Any
+  <Limit OPTIONS>
+    Order deny,allow
+    Deny from all
+  </Limit>
 </Directory>
 
+#
+# DirectoryIndex: sets the file that Apache will serve if a directory
+# is requested.
+#
 <IfModule dir_module>
   DirectoryIndex index.html
 </IfModule>
 
+#
+# The following lines prevent .htaccess and .htpasswd files from being
+# viewed by Web clients.
+#
 <FilesMatch "^\.ht">
-  Order allow,deny
-  Deny from all
-  Satisfy All
+  Require all denied
 </FilesMatch>
 
+#
+# ErrorLog: The location of the error log file.
+# If you do not specify an ErrorLog directive within a <VirtualHost>
+# container, error messages relating to that virtual host will be
+# logged here.  If you *do* define an error logfile for a <VirtualHost>
+# container, that host's errors will be logged there and not here.
+#
+#ErrorLog "logs/error.log"
 ##에러로그 위치 수정 필요
 ErrorLog "<%= p('logPath')%>/error_log"
 
@@ -169,43 +251,52 @@ LogLevel warn
 <Directory "/var/vcap/packages/apache2/cgi-bin">
     AllowOverride None
     Options None
-    Order allow,deny
-    Allow from all
+    Require all denied
 </Directory>
 
-
-DefaultType text/plain
 
 <IfModule mime_module>
 
     TypesConfig conf/mime.types
 
-
     AddType application/x-compress .Z
     AddType application/x-gzip .gz .tgz
-
 
     #AddHandler cgi-script .cgi
 
     # For type maps (negotiated resources):
     #AddHandler type-map var
 
-
     #AddType text/html .shtml
     #AddOutputFilter INCLUDES .shtml
 </IfModule>
 
+TraceEnable off
 
+#
+# The mod_mime_magic module allows the server to use various hints from the
+# contents of the file itself to determine its type.  The MIMEMagicFile
+# directive tells the module where the hint definitions are located.
+#
 #MIMEMagicFile conf/magic
 
 
-
-
-#MaxRanges unlimited
-
-
-#EnableMMAP off
+#EbleMMAP and EnableSendfile: On systems that support it,
+# memory-mapping or the sendfile syscall is used to deliver
+# files.  This usually improves server performance, but must
+# be turned off when serving from networked-mounted
+# filesystems or if support for these functions is otherwise
+# broken on your system.
+#
+#nableMMAP off
 #EnableSendfile off
+
+# Supplemental configuration
+#
+# The configuration files in the conf/extra/ directory can be 
+# included to add extra features or to modify the default configuration of 
+# the server, or you may simply copy their contents here and change as 
+# necessary.
 
 # Server-pool management (MPM specific)
 #Include conf/extra/httpd-mpm.conf
