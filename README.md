@@ -24,7 +24,7 @@
   - Download & Copy "source files" into the src directory    
     ```   
     ## download source files    
-    $ wget -O src.zip http://45.248.73.44/index.php/s/wfefaPDBbEGy7SG/download    
+    $ wget -O src.zip http://45.248.73.44/index.php/s/AYTPnjTcYEXL32e/download    
     
     ## unzip download source files    
     $ unzip src.zip    
@@ -42,7 +42,7 @@
       ├── java   
       │   └── server-jre-8u121-linux-x64.tar.gz   
       ├── mariadb   
-      │   └── mariadb-10.1.22-linux-x86_64.tar.gz   
+      │   └── mariadb-10.5.5-linux-x86_64.tar.gz   
       ├── paas-ta-portal-webadmin   
       │   └── paas-ta-portal-webadmin.war   
       └── paas-ta-portal-webuser   
@@ -50,7 +50,7 @@
     ```  
   - Create PaaS-TA Portal UI Release   
     ```   
-    ## <VERSION> :: release version (e.g. 2.0.1)   
+    ## <VERSION> :: release version (e.g. 2.1.0)   
     ## <RELEASE_TARBALL_PATH> :: release file path (e.g. /home/ubuntu/workspace/paasta-portal-ui-release-<VERSION>.tgz)    
     $ bosh -e <bosh_name> create-release --name=paasta-portal-ui-release --sha2 --version=<VERSION> --tarball=<RELEASE_TARBALL_PATH> --force   
     ```    
