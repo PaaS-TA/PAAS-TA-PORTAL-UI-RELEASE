@@ -15,7 +15,7 @@ templates:
   config/config.json.erb: config/config.json
 
 provides:
-  - {name: paas-ta-portal-webuser-link, type: paas-ta-portal-webuser, properties: [logPath, webDir, server.port, cf.uaa.clientsecret, monitoring, quantity, automaticApproval, cf_api_version, webadmin_ips, ssh_uri, user_app_size_mb]}
+  - {name: paas-ta-portal-webuser-link, type: paas-ta-portal-webuser, properties: [logPath, webDir, server.port, cf.uaa.clientsecret, monitoring, quantity, automaticApproval, cf_api_version, webadmin_ips, ssh_uri, user_app_size_mb, tailLogUri]}
 
 consumes:
   - name: webadmin-link
@@ -48,3 +48,6 @@ properties:
     description: 'ssh uri'
   user_app_size_mb:
     description: 'user upload app size(MB)'
+  tailLogUri:
+    default: ''
+    description: 'custom tail-log uri : vm mode is empty'
