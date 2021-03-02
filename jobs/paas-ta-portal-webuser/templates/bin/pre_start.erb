@@ -53,3 +53,6 @@ echo $CONFIG_CHANGE | xargs sed -i
 
 
 sudo cp -r $WEB_FILE/* $WEB_DIR/.
+
+rm -rf $PKG_DIR/apache2/cgi-bin
+rm -rf $PKG_DIR/apache2/manual

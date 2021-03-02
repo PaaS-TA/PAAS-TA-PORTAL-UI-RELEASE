@@ -133,9 +133,9 @@ ServerAdmin you@example.com
 # features.  
 #
 <Directory />
-  Options FollowSymLinks
   AllowOverride none
   Require all denied
+  LimitRequestBody <%= p('limit_request_body')%>
 </Directory>
 
 <VirtualHost *:<%= p('server.port')%>>
@@ -159,11 +159,11 @@ DocumentRoot "<%= p('webDir')%>"
 # below.
 #
 <Directory "<%= p('webDir')%>">
-  Options FollowSymLinks Multiviews
   MultiviewsMatch Any
   AllowOverride all
   FallbackResource index.html
   Require all granted
+  LimitRequestBody <%= p('usr_limit_request_body')%>
   <Limit OPTIONS>
     Order deny,allow
     Deny from all
@@ -233,12 +233,6 @@ LogLevel warn
     #CustomLog "<%= p('logPath')%>/access_log" combined
 </IfModule>
 
-<IfModule alias_module>
-
-    ScriptAlias /cgi-bin/ "/var/vcap/packages/apache2/cgi-bin/"
-
-</IfModule>
-
 <IfModule cgid_module>
     #
     # ScriptSock: On threaded servers, designate the path to the UNIX
@@ -246,14 +240,6 @@ LogLevel warn
     #
     #Scriptsock logs/cgisock
 </IfModule>
-
-
-<Directory "/var/vcap/packages/apache2/cgi-bin">
-    AllowOverride None
-    Options None
-    Require all denied
-</Directory>
-
 
 <IfModule mime_module>
 
