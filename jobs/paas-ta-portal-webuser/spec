@@ -57,3 +57,7 @@ properties:
   usr_limit_request_body:
     default: '10240000'
     description: 'Apache Limiting Upload File Size Directory webDir'
+  cce_enable:
+    description: cce_portal_patch.
+    default: false
+

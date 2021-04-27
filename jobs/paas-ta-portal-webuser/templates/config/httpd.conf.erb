@@ -133,9 +133,13 @@ ServerAdmin you@example.com
 # features.  
 #
 <Directory />
+<% if p("cce_enable") %>
+  LimitRequestBody <%= p('limit_request_body')%>
+<% else %>
+  Options FollowSymLinks
+<% end %>
   AllowOverride none
   Require all denied
-  LimitRequestBody <%= p('limit_request_body')%>
 </Directory>
 
 <VirtualHost *:<%= p('server.port')%>>
@@ -159,11 +163,15 @@ DocumentRoot "<%= p('webDir')%>"
 # below.
 #
 <Directory "<%= p('webDir')%>">
+<% if p("cce_enable") %>
+  LimitRequestBody <%= p('usr_limit_request_body')%>
+<% else %>
+  Options FollowSymLinks Multiviews
+<% end %>
   MultiviewsMatch Any
   AllowOverride all
   FallbackResource index.html
   Require all granted
-  LimitRequestBody <%= p('usr_limit_request_body')%>
   <Limit OPTIONS>
     Order deny,allow
     Deny from all
@@ -232,6 +240,18 @@ LogLevel warn
     #
     #CustomLog "<%= p('logPath')%>/access_log" combined
 </IfModule>
+
+<% if !p("cce_enable") %>
+<IfModule alias_module>
+    ScriptAlias /cgi-bin/ "/var/vcap/packages/apache2/cgi-bin/"
+</IfModule>
+
+<Directory "/var/vcap/packages/apache2/cgi-bin">
+    AllowOverride None
+    Options None
+    Require all denied
+</Directory>
+<% end %>
 
 <IfModule cgid_module>
     #

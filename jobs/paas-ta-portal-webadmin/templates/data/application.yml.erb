@@ -50,7 +50,7 @@ server:
 
 datasource:
   cfg: 
-    url: jdbc:mysql://<%= link('mariadb-link').instances[0].address%>:<%= link('mariadb-link').p('mariadb.port') %>/webconfig
+    url: jdbc:mariadb://<%= link('mariadb-link').instances[0].address%>:<%= link('mariadb-link').p('mariadb.port') %>/webconfig
     username: root
     password: <%= p('mariadb.admin_user.password')%>
     ddl-auto: none
