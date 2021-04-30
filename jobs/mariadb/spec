@@ -35,3 +35,6 @@ properties:
     description: portal header auth
   portal_default.desc:
     description: portal api desc
+  cce_enable:
+    description: cce_portal_patch.
+    default: false
