@@ -1,20 +1,20 @@
 set -e -x
 
 echo "Extracting httpd ..."
-tar zxvf apache2/httpd-2.4.51.tar.gz
+tar zxvf apache2/httpd-2.4.53.tar.gz
 
 echo "Extracting httpd dependencies..."
-mkdir -p httpd-2.4.51/srclib/apr
-mkdir -p httpd-2.4.51/srclib/apr-util
+mkdir -p httpd-2.4.53/srclib/apr
+mkdir -p httpd-2.4.53/srclib/apr-util
 
-tar xzf apache2/apr-1.7.0.tar.gz -C httpd-2.4.51/srclib/apr --strip-components 1
-tar xzf apache2/apr-util-1.6.1.tar.gz -C httpd-2.4.51/srclib/apr-util --strip-components 1
+tar xzf apache2/apr-1.7.0.tar.gz -C httpd-2.4.53/srclib/apr --strip-components 1
+tar xzf apache2/apr-util-1.6.1.tar.gz -C httpd-2.4.53/srclib/apr-util --strip-components 1
 
 tar zxvf apache2/pcre-8.43.tar.gz
 tar zxvf apache2/expat-2.2.8.tar.gz
 
-cp expat-2.2.8/lib/expat_external.h httpd-2.4.51/srclib/apr-util/include
-cp expat-2.2.8/lib/expat.h httpd-2.4.51/srclib/apr-util/include
+cp expat-2.2.8/lib/expat_external.h httpd-2.4.53/srclib/apr-util/include
+cp expat-2.2.8/lib/expat.h httpd-2.4.53/srclib/apr-util/include
 
 echo "Building httpd dependencies ..."
 cd pcre-8.43
@@ -28,7 +28,7 @@ make
 make install
 
 echo "Building httpd ..."
-cd ../httpd-2.4.51
+cd ../httpd-2.4.53
 ./configure --prefix=${BOSH_INSTALL_TARGET} --enable-mods-shared=all --enable-rewrite \
   --enable-proxy --enable-proxy-connect --enable-auth-digest --enable-proxy-wstunnel=shared \
   --with-included-apr --with-included-apr-util --with-pcre=${BOSH_INSTALL_TARGET}/bin/pcre-config \
