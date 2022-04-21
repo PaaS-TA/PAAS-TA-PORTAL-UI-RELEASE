@@ -50,7 +50,7 @@ do
         PRE_LANG+=(`basename -s ".json" "${file}"`)
 done
 
-AFTER_LANG=$(grep "\[" ${JOB_APPCONFIG} | tr -d '\[' | tr -d '\]' | tr -d '"' | tr -d ' ' | tr -d '\r' | cut -d ":" -f2)
+AFTER_LANG=$(grep "languageList" ${JOB_APPCONFIG} | tr -d '\[' | tr -d '\]' | tr -d '"' | tr -d ' ' | tr -d '\r' | cut -d ":" -f2)
 IFS=',' read -r -a AFTER_LANG_LIST <<< "$AFTER_LANG"
 
 if [[ ${#AFTER_LANG_LIST[@]} -eq 0 ]]; then
