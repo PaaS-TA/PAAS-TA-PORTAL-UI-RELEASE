@@ -51,7 +51,12 @@ do
 done
 
 AFTER_LANG=$(grep "languageList" ${JOB_APPCONFIG} | tr -d '\[' | tr -d '\]' | tr -d '"' | tr -d ' ' | tr -d '\r' | cut -d ":" -f2)
-IFS=',' read -r -a AFTER_LANG_LIST <<< "$AFTER_LANG"
+IFS=',' read -r -a DUP_LANG_CHECK <<< "$AFTER_LANG"
+AFTER_LANG_LIST=($(printf "%s\n" "${DUP_LANG_CHECK[@]}" | sort -u))
+
+DUP_HANDLE_FILTER=$(echo "${AFTER_LANG_LIST[*]}" | sed 's/ /\",\"/g')
+sed -i "s/\"languageList\": .*/\"languageList\": \[\"${DUP_HANDLE_FILTER}\"\]/g" ${JOB_APPCONFIG}
+
 
 if [[ ${#AFTER_LANG_LIST[@]} -eq 0 ]]; then
         echo "Error: Language list does not exist" >> $LOG_PATH
