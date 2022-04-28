@@ -46,3 +46,6 @@ properties:
     description: 'mariadb root password'
   languageList:
     description: 'language list used in portal'
+    default:
+    - ko
+    - en
