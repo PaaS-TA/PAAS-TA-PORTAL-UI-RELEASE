@@ -42,7 +42,7 @@
       ├── java   
       │   └── server-jre-8u121-linux-x64.tar.gz   
       ├── mariadb   
-      │   └── mariadb-10.5.15-linux-x86_64.tar.gz   
+      │   └── mariadb-10.5.16-linux-x86_64.tar.gz
       ├── paas-ta-portal-webadmin   
       │   └── paas-ta-portal-webadmin.war   
       └── paas-ta-portal-webuser   
