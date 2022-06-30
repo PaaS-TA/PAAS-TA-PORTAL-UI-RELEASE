@@ -15,7 +15,7 @@ templates:
   config/config.json.erb: config/config.json
 
 provides:
-  - {name: paas-ta-portal-webuser-link, type: paas-ta-portal-webuser, properties: [logPath, webDir, server.port, cf.uaa.clientsecret, monitoring, quantity, automaticApproval, cf_api_version, webadmin_ips, ssh_uri, user_app_size_mb, tailLogUri, limit_request_body, usr_limit_request_body]}
+  - {name: paas-ta-portal-webuser-link, type: paas-ta-portal-webuser, properties: [logPath, webDir, server.port, cf.uaa.clientsecret, monitoring, quantity, automaticApproval, cf_api_version, webadmin_ips, ssh_uri, user_app_size_mb, tailLogUri, languageList, limit_request_body, usr_limit_request_body]}
 
 consumes:
   - name: webadmin-link
@@ -51,6 +51,11 @@ properties:
   tailLogUri:
     default: ''
     description: 'custom tail-log uri : vm mode is empty'
+  languageList:
+    description: 'language list used in portal'
+    default:
+    - ko
+    - en
   limit_request_body:
     default: '5000000'
     description: 'Apache Limiting Upload File Size Directory /'

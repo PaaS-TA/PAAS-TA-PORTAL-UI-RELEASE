@@ -3,6 +3,7 @@ name: paas-ta-portal-webadmin
 
 templates:
   bin/service_ctl.erb: bin/service_ctl
+  bin/pre_start.erb: bin/pre_start
   bin/monit_debugger: bin/monit_debugger
   data/properties.sh: data/properties.sh
   data/application.yml.erb: data/application.yml
@@ -13,7 +14,7 @@ packages:
   - paas-ta-portal-webadmin
 
 provides:
-  - {name: paas-ta-portal-webadmin-link, type: paas-ta-portal-webadmin, properties: [java_opts, infra.admin.enable, server.port, eureka.port, api.url, gateway.port, mariadb.port, mariadb.admin_user.password]}
+  - {name: paas-ta-portal-webadmin-link, type: paas-ta-portal-webadmin, properties: [java_opts, infra.admin.enable, server.port, eureka.port, api.url, gateway.port, mariadb.port, mariadb.admin_user.password, languageList]}
 
 consumes:
   - name: mariadb-link
@@ -43,4 +44,8 @@ properties:
     default: '3306'
   mariadb.admin_user.password:
     description: 'mariadb root password'
-    
+  languageList:
+    description: 'language list used in portal'
+    default:
+    - ko
+    - en
