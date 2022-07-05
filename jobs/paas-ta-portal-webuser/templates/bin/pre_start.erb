@@ -52,7 +52,15 @@ done
 
 AFTER_LANG=$(grep "languageList" ${JOB_APPCONFIG} | tr -d '\[' | tr -d '\]' | tr -d '"' | tr -d ' ' | tr -d '\r' | cut -d ":" -f2)
 IFS=',' read -r -a DUP_LANG_CHECK <<< "$AFTER_LANG"
-AFTER_LANG_LIST=($(printf "%s\n" "${DUP_LANG_CHECK[@]}" | sort -u))
+
+AFTER_LANG_LIST=()
+for lang in ${DUP_LANG_CHECK[@]}
+do
+if [[ ! ${AFTER_LANG_LIST[@]} =~ ${lang} ]]; then
+                AFTER_LANG_LIST+=($lang)
+        fi
+done
+
 
 DUP_HANDLE_FILTER=$(echo "${AFTER_LANG_LIST[*]}" | sed 's/ /\",\"/g')
 sed -i "s/\"languageList\": .*/\"languageList\": \[\"${DUP_HANDLE_FILTER}\"\]/g" ${JOB_APPCONFIG}
