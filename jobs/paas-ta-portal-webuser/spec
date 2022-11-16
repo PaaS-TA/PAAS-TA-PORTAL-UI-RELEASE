@@ -44,8 +44,14 @@ properties:
     description: 'cf api version'
   webadmin_ips:
     description: 'webadmin ips'
+  ssh_enable:
+    description: 'ssh enable'
+    default: 'false'
   ssh_uri:
     description: 'ssh uri'
+  tail_log_interval_millisecond:
+    description: 'tail log interval (millisecond)'
+    default: '250'
   user_app_size_mb:
     description: 'user upload app size(MB)'
   tailLogUri:
