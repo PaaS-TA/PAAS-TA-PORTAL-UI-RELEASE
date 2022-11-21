@@ -15,7 +15,7 @@ templates:
   config/config.json.erb: config/config.json
 
 provides:
-  - {name: paas-ta-portal-webuser-link, type: paas-ta-portal-webuser, properties: [logPath, webDir, server.port, cf.uaa.clientsecret, monitoring, quantity, automaticApproval, cf_api_version, webadmin_ips, ssh_uri, user_app_size_mb, tailLogUri, languageList, limit_request_body, usr_limit_request_body]}
+  - {name: paas-ta-portal-webuser-link, type: paas-ta-portal-webuser, properties: [logPath, webDir, server.port, cf.uaa.clientsecret, monitoring, automaticApproval, cf_api_version, webadmin_ips, ssh_uri, user_app_size_mb, tailLogUri, languageList, limit_request_body, usr_limit_request_body]}
 
 consumes:
   - name: webadmin-link
@@ -36,8 +36,6 @@ properties:
     default: 'clientsecret'
   monitoring:
     description: 'user-portal use monitoring view'
-  quantity:
-    description: 'user-portal use quantity view'
   automaticApproval:
     description: 'auto Approval'
   cf_api_version:
